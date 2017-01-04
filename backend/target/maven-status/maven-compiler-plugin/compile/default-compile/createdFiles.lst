@@ -1,0 +1,16 @@
+br/com/desafio/infrastructure/NgDemoApplicationSetup$1.class
+br/com/desafio/dao/impl/ColaboradorDAOImpl.class
+br/com/desafio/dao/GenericoDAO.class
+br/com/desafio/infrastructure/UserModule.class
+br/com/desafio/modelo/Departamento.class
+br/com/desafio/infrastructure/NgDemoApplicationSetup.class
+br/com/desafio/modelo/Cargo.class
+br/com/desafio/web/rest/ResponseCorsFilter.class
+br/com/desafio/dao/ColaboradorDAO.class
+br/com/desafio/service/impl/ColaboradorServiceImpl.class
+br/com/desafio/dao/impl/GenericDAORepository.class
+br/com/desafio/modelo/User.class
+br/com/desafio/modelo/Colaborador.class
+br/com/desafio/modelo/NullUser.class
+br/com/desafio/service/ColaboradorService.class
+br/com/desafio/web/rest/ColaboradorRest.class

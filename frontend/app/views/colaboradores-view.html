@@ -1,0 +1,19 @@
+<div class="row">
+  <h2>Colaboradores</h2> 
+  <input type="button" ng-click="" value="Novo" />
+</div>
+
+<div class="row">
+  <input type="text" placeholder="Insira um texto para pesquisa" width="100%">
+</div>
+
+<div class="row">
+  <div class="col-mod-6" ng-repeat="colaborador in colaboradores">
+    <p style="font-weight: bold">{{colaborador.nome}}</p>
+    <p>{{colaborador.cargo.descricao}}</p>
+    <p>{{colaborador.departamento.descricao}}</p>
+  </div>
+
+<input type="button" ng-click="botaoMais()" value="Mais" />
+
+</div>
