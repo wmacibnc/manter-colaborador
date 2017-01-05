@@ -17,10 +17,27 @@ services.factory('UsersFactory', function ($resource) {
     })
 });
 
-services.factory('ColaboradorFactory', function ($resource) {
+services.factory('ColaboradoresViewFactory', function ($resource) {
     return $resource(baseUrl + '/ngdemo/web/colaborador/lista-colaboradores', {}, {
-        query: { method: 'POST'},
-        create: { method: 'POST' }
+        query: { method: 'POST', isArray: true}
+    })
+});
+
+services.factory('ColaboradorAtualizarFactory', function ($resource) {
+    return $resource(baseUrl + '/ngdemo/web/colaborador/atualizar-colaborador', {}, {
+        alterarColaborador: { method: 'PUT'}
+    })
+});
+
+services.factory('ColaboradorCadastroFactory', function ($resource) {
+    return $resource(baseUrl + '/ngdemo/web/colaborador/salvar-colaborador', {}, {
+        salvarColaborador: { method: 'POST'}
+    })
+});
+
+services.factory('ColaboradorExcluirFactory', function ($resource) {
+    return $resource(baseUrl + '/ngdemo/web/colaborador/excluir-colaborador                                                                                                                                                                                                                                                                                                                                                         /:id', {}, {
+        excluirColaborador: { method: 'DELETE', params: {id: '@id'} }
     })
 });
 

@@ -1,15 +1,15 @@
 <div class="row">
   <h2>Colaboradores</h2> 
-  <input type="button" ng-click="" value="Novo" />
+  <input type="button" ng-click="novoColaborador()" value="Novo" />
 </div>
 
 <div class="row">
-  <input type="text" placeholder="Insira um texto para pesquisa" width="100%">
+  <input type="text" placeholder="Insira um texto para pesquisa" width="100%" ng-model="filtro">
 </div>
 
 <div class="row">
   <div class="col-mod-6" ng-repeat="colaborador in colaboradores">
-    <p style="font-weight: bold">{{colaborador.nome}}</p>
+    <p style="font-weight: bold"><a ng-click="visualizarColaborador(colaborador)">{{colaborador.nome}}</a></p>
     <p>{{colaborador.cargo.descricao}}</p>
     <p>{{colaborador.departamento.descricao}}</p>
   </div>

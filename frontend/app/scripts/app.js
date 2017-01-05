@@ -11,6 +11,9 @@ angular.module('ngdemoApp', [
   $routeProvider.when('/user-creation', {templateUrl: 'views/user-creation.html', controller: 'UserCreationCtrl'});
 
   $routeProvider.when('/colaboradores', {templateUrl: 'views/colaboradores-view.html', controller: 'ColaboradoresCtrl'});
+  $routeProvider.when('/visualizar-colaborador', {templateUrl: 'views/visualizar-colaborador-view.html', controller: 'VisualizarColaboradorCtrl'});
+  $routeProvider.when('/alterar-colaborador', {templateUrl: 'views/alterar-colaborador-view.html', controller: 'AlterarColaboradorCtrl'});
+  $routeProvider.when('/novo-colaborador', {templateUrl: 'views/novo-colaborador-view.html', controller: 'CadastrarColaboradorCtrl'});
 
   $routeProvider.otherwise({redirectTo: '/dummy'});
 

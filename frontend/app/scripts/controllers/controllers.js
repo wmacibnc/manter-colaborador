@@ -43,14 +43,62 @@ app.controller('UserListCtrl', ['$scope', 'UsersFactory', 'UserFactory', '$locat
     $scope.users = UsersFactory.query();
   }]);
 
-app.controller('ColaboradoresCtrl', ['$scope', 'ColaboradorFactory',
-  function ($scope, ColaboradorFactory) {
+app.controller('ColaboradoresCtrl', ['$scope', 'ColaboradoresViewFactory','$location','$rootScope',
+  function ($scope, ColaboradoresViewFactory, $location, $rootScope) {
     $scope.page = 1;
     var paginacaoDTO = {};
     paginacaoDTO.page = $scope.page++;
-    paginacaoDTO.filtro = 'teste123';
+    paginacaoDTO.filtro = $scope.filtro;
 
-    $scope.colaboradores = ColaboradorFactory.query(paginacaoDTO);
+    $scope.colaboradores = ColaboradoresViewFactory.query(paginacaoDTO);
+
+    $scope.visualizarColaborador = function (selecionado){
+      $rootScope.colaboradorSelecionado = selecionado;
+      $location.path('/visualizar-colaborador');
+    }
+
+    $scope.novoColaborador = function (){
+      $location.path('/novo-colaborador');
+    }
+
+}]);
+
+app.controller('CadastrarColaboradorCtrl', ['$scope', 'ColaboradorCadastroFactory', '$location',
+  function ($scope, ColaboradorCadastroFactory, $location) {
+    
+     $scope.salvarDadosCadastro = function (){
+      ColaboradorCadastroFactory.salvarColaborador($scope.colaboradorSelecionado);
+      $location.path('/colaboradores');
+    };
+
+}]);
+
+app.controller('VisualizarColaboradorCtrl', ['$scope', 'ColaboradorExcluirFactory', '$location', '$rootScope',
+  function ($scope, ColaboradorExcluirFactory, $location, $rootScope) {
+    
+    $scope.colaboradorSelecionado = $rootScope.colaboradorSelecionado;
+
+    $scope.alterarColaborador = function (){
+      $location.path('/alterar-colaborador');
+    };
+
+    $scope.excluirColaborador = function(id){
+      ColaboradorExcluirFactory.excluirColaborador({ id: id });
+      $location.path('/colaboradores');
+    }
+
+}]);
+
+app.controller('AlterarColaboradorCtrl', ['$scope', 'ColaboradorAtualizarFactory', '$location', '$rootScope',
+  function ($scope, ColaboradorAtualizarFactory, $location, $rootScope) {
+    
+    $scope.colaboradorSelecionado = $rootScope.colaboradorSelecionado;
+
+    $scope.salvarDadosAlteracao = function (){
+      ColaboradorAtualizarFactory.salvarColaborador($scope.colaboradorSelecionado);
+      $location.path('/colaboradores');
+    };
+
 }]);
 
 app.controller('UserDetailCtrl', ['$scope', '$routeParams', 'UserFactory', '$location',

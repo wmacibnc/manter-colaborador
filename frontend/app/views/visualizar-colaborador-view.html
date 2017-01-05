@@ -1,0 +1,19 @@
+<div class="row">
+  <h2>Visualizar Colaborador</h2> 
+</div>
+
+<div class="row">
+	<a href="javascript:window.history.go(-1)">Voltar</a>
+	<input type="button" ng-click="alterarColaborador()" value="Alterar" />
+	<input type="button" ng-click="excluirColaborador(colaboradorSelecionado.id)" value="Excluir" />
+</div>
+
+
+
+<div class="row">
+	<p style="font-weight: bold">{{colaboradorSelecionado.nome}}</p>
+    <p>{{colaboradorSelecionado.cargo.descricao}}</p>
+    <p>{{colaboradorSelecionado.departamento.descricao}}</p>
+
+    <p>{{colaboradorSelecionado.biografia}}</p>
+</div>
