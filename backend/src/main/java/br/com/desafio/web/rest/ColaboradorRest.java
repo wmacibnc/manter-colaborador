@@ -21,12 +21,36 @@ public class ColaboradorRest {
     }
 
     @POST
+    @Path("lista-colaboradores")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Path("lista-colaboradores")
     public List<Colaborador> listarColaboradores(PaginacaoDTO paginacaoDTO) {
-    	System.out.println(paginacaoDTO);
-        return colaboradorService.listarColaboradores();
+        return colaboradorService.listarColaboradores(paginacaoDTO);
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("salvar-colaborador")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Colaborador salvarColaborador(Colaborador colaborador) {
+        return colaboradorService.salvar(colaborador);
+    }
+
+    @PUT
+    @Path("atualizar-colaborador")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Colaborador atualizarColaborador(Colaborador colaborador) {
+    	colaboradorService.alterar(colaborador);
+        return colaborador;
+    }
+
+    @DELETE
+    @Path("excluir-colaborador/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Integer excluir(@PathParam("id") int id) {
+    	colaboradorService.excluir(id);
+        return id;
     }
 
 }

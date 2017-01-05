@@ -2,6 +2,7 @@ package br.com.desafio.dao;
 
 import java.util.List;
 
+import br.com.desafio.dto.PaginacaoDTO;
 import br.com.desafio.modelo.Colaborador;
 
 public interface ColaboradorDAO{
@@ -15,5 +16,7 @@ public interface ColaboradorDAO{
 	void excluir(int id);
 	    
     Colaborador salvar (Colaborador colaborador);
+    
+    List<Colaborador> listarPaginado(PaginacaoDTO paginacaoDTO);
 
 }
