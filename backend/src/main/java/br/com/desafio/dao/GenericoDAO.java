@@ -4,13 +4,11 @@ import java.util.List;
 
 public interface GenericoDAO<T> {
 
-	List<T> listar();
+	List<T> listar(Class<T> classe);
 	
-	T obterPorId(Long id);
-
 	void alterar(T t);
 	    
-	void excluir(int id);
+	void excluir(T t);
 	    
-    T salvar (T t);
+	T salvar(T t);
 }

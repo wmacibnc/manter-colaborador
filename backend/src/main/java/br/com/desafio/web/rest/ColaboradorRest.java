@@ -3,7 +3,10 @@ package br.com.desafio.web.rest;
 import com.google.inject.Inject;
 
 import br.com.desafio.dto.PaginacaoDTO;
+import br.com.desafio.modelo.Cargo;
 import br.com.desafio.modelo.Colaborador;
+import br.com.desafio.modelo.Departamento;
+import br.com.desafio.modelo.TipoContato;
 import br.com.desafio.service.ColaboradorService;
 
 import javax.ws.rs.*;
@@ -51,6 +54,28 @@ public class ColaboradorRest {
     public Integer excluir(@PathParam("id") int id) {
     	colaboradorService.excluir(id);
         return id;
+    }
+    
+    @GET
+    @Path("cargos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Cargo> cargos() {
+        return colaboradorService.cargos();
+    }
+    
+    
+    @GET
+    @Path("departamentos")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Departamento> departamentos() {
+        return colaboradorService.departamentos();
+    }
+    
+    @GET
+    @Path("tipos-contato")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<TipoContato> tiposContato() {
+        return colaboradorService.tiposContato();
     }
 
 }

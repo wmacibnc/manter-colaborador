@@ -7,7 +7,10 @@ import com.google.inject.Singleton;
 
 import br.com.desafio.dao.ColaboradorDAO;
 import br.com.desafio.dto.PaginacaoDTO;
+import br.com.desafio.modelo.Cargo;
 import br.com.desafio.modelo.Colaborador;
+import br.com.desafio.modelo.Departamento;
+import br.com.desafio.modelo.TipoContato;
 import br.com.desafio.service.ColaboradorService;
 
 @Singleton
@@ -32,12 +35,34 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 
 	@Override
 	public void excluir(int id) {
-		colaboradorDAO.excluir(id);
+		colaboradorDAO.excluir(preencherObjetoColaborador(id));
+	}
+
+	private Colaborador preencherObjetoColaborador(int id) {
+		Integer identificador = id;
+		Colaborador colaborador = new Colaborador();
+		colaborador.setId(identificador.longValue());
+		return colaborador;
 	}
 
 	@Override
 	public Colaborador salvar(Colaborador colaborador) {
 		return colaboradorDAO.salvar(colaborador);
+	}
+	
+	@Override
+	public List<Cargo> cargos() {
+		return colaboradorDAO.cargos();
+	}
+	
+	@Override
+	public List<Departamento> departamentos() {
+		return colaboradorDAO.departamentos();
+	}
+	
+	@Override
+	public List<TipoContato> tiposContato() {
+		return colaboradorDAO.tiposContato();
 	}
 
 }

@@ -10,13 +10,11 @@ import br.com.desafio.dao.GenericoDAO;
 
 public class GenericDAORepository<T> implements GenericoDAO<T> {
 
-	private T t;
-	
 	protected EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
-	public List<T> listar() {
-		return getEntityManager().createQuery("FROM " + "Colaborador").getResultList();
+	public List<T> listar(Class<T> classe) {
+		return getEntityManager().createQuery("FROM " + classe.getSimpleName()).getResultList();
 	}
 
 	protected EntityManager getEntityManager() {
@@ -26,27 +24,27 @@ public class GenericDAORepository<T> implements GenericoDAO<T> {
 		}
 		return entityManager;
 	}
-
-	@Override
-	public T obterPorId(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public T salvar(T t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public void alterar(T t) {
-		// TODO Auto-generated method stub
+		getEntityManager().getTransaction().begin();
+		getEntityManager().merge(t);
+		getEntityManager().getTransaction().commit();
 	}
 
 	@Override
-	public void excluir(int id) {
-		// TODO Auto-generated method stub
+	public void excluir(T t) {
+		getEntityManager().getTransaction().begin();
+		getEntityManager().remove(t);
+		getEntityManager().getTransaction().commit();
+	}
+
+	@Override
+	public T salvar(T entidade) {
+		getEntityManager().getTransaction().begin();
+		getEntityManager().persist(entidade);
+		getEntityManager().getTransaction().commit();
+		return entidade;
 	}
 
 }

@@ -3,7 +3,10 @@ package br.com.desafio.service;
 import java.util.List;
 
 import br.com.desafio.dto.PaginacaoDTO;
+import br.com.desafio.modelo.Cargo;
 import br.com.desafio.modelo.Colaborador;
+import br.com.desafio.modelo.Departamento;
+import br.com.desafio.modelo.TipoContato;
 
 public interface ColaboradorService {
 
@@ -14,4 +17,10 @@ public interface ColaboradorService {
 	void excluir(int id);
 	    
     Colaborador salvar (Colaborador colaborador);
+    
+    List<Cargo> cargos();
+    
+    List<Departamento> departamentos();
+    
+    List<TipoContato> tiposContato();
 }

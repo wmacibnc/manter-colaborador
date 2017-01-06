@@ -1,14 +1,109 @@
 <div class="row">
-  <h2>Novo Colaborador</h2> 
+	<div class="col-md-11"></div>
+	<div class="col-md-1"><input type="button" class="btn btn-default" ng-click="salvarDadosCadastro()" value="Salvar"> </div>
+</div>
+
+<br /><br />
+<div class="row">
+	<div class="col-md-2">
+		<img src="../images/favicon.png" style="width: 70%  !important;" />
+	</div>
+	<div class="col-md-10">
+		<div class="form-group">
+			<input type="text" class="form-control" placeholder="Nome do Colaborador" ng-model="colaboradorSelecionado.nome" />
+		</div>
+
+		<div class="form-group">
+			<select class="form-control" name="cargo" id="cargo" ng-model="colaboradorSelecionado.cargo.id" placeholder="teste">
+				<option selected="selected"> Cargo do Colaborador</option>
+				<option ng-repeat="cargo in cargos" value="{{cargo.id}}">{{cargo.descricao}}</option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<select class="form-control" name="departamento" id="departamento" ng-model="colaboradorSelecionado.departamento.id">
+				<option selected="selected"> Departamento do Colaborador</option>
+				<option ng-repeat="departamento in departamentos" value="{{departamento.id}}">{{departamento.descricao}}</option>
+			</select>
+		</div>
+
+	</div>
+</div>
 </div>
 
 <div class="row">
-	<input type="button" ng-click="salvarDadosCadastro()" value="Salvar" />
+	<div class="col-md-12">
+		<div class="form-group">
+			<textarea placeholder="Biografia do Colaborador" class="form-control" rows="3" ng-model="colaboradorSelecionado.biografia">
+			</textarea>
+		</div>
+	</div>
 </div>
-
 
 
 <div class="row">
-	<input type="text" ng-model="colaboradorSelecionado.nome"/>
-	<input type="text" ng-model="colaboradorSelecionado.biografia"/>
+	<h2>Competências</h2>
+	<div class="col-md-12">
+		<div class="form-group">
+			<textarea placeholder="Competência do Colaborador" class="form-control" rows="3" ng-model="colaboradorSelecionado.competencia" />
+		</div>
+	</div>
 </div>
+
+
+<div class="row">
+	<h2>Contatos</h2>
+
+	<div class="col-md-2">
+		<div class="form-group">
+			<input type="button" class="btn btn-default" ng-click="adicionarContato()" value="Novo Contato" />
+		</div>
+	</div>
+	<div class="col-md-10"></div>
+</div>
+
+<div class="row">
+
+	<div ng-repeat="contato in contatos">
+		<div class="col-md-6">
+
+			<div class="col-md-4">
+				<select class="form-control" name="tipoContato" id="tipoContato" ng-model="contato.tipoContato.id">
+					<option selected="selected"> Tipo de Contato do Colaborador</option>
+					<option ng-repeat="tipoContato in tiposContato" value="{{tipoContato.id}}">{{tipoContato.descricao}}</option>
+				</select>
+			</div>
+
+			<div class="col-md-8">
+				<div class="form-group">
+					<input type="text" ng-model="contato.descricao" class="form-control" placeholder="Digite os dados de contato"/>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-10">
+		<div class="form-group">
+			<div class="form-group">
+				<input type="text" id="endereco" class="form-control" placeholder="Digite seu endereço" />
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<button ng-click="converte()" class="btn btn-primary">Pesquisar Endereço</button>
+	</div>
+</div>
+
+<div id="map_canvas" style="width:100%; height:300px"></div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+

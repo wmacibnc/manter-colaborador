@@ -1,19 +1,29 @@
 <div class="row">
-  <h2>Colaboradores</h2> 
-  <input type="button" ng-click="novoColaborador()" value="Novo" />
+  <div class="col-md-9"><h2>Colaboradores</h2></div>
+  <div class="col-md-3"><input type="button" class="btn btn-default" ng-click="novoColaborador()" value=" + Novo "> </div>
 </div>
 
 <div class="row">
-  <input type="text" placeholder="Insira um texto para pesquisa" width="100%" ng-model="filtro">
-</div>
 
-<div class="row">
-  <div class="col-mod-6" ng-repeat="colaborador in colaboradores">
-    <p style="font-weight: bold"><a ng-click="visualizarColaborador(colaborador)">{{colaborador.nome}}</a></p>
-    <p>{{colaborador.cargo.descricao}}</p>
-    <p>{{colaborador.departamento.descricao}}</p>
+<div class="input-group col-md-10">
+    <input type="text" class="form-control" placeholder="Insira um texto para pesquisa" aria-describedby="basic-addon2" ng-model="filtro">
+    <span ng-click="botaoMaisPesquisar()" class="input-group-addon glyphicon glyphicon-search" id="basic-addon2"></span>
   </div>
+</div>
 
-<input type="button" ng-click="botaoMais()" value="Mais" />
+<div class="row">
+  <div class="col-md-5" style="outline: 1px solid #ccc; margin: 5px;" ng-repeat="colaborador in colaboradores">
+    <div class="col-md-6">
+      <img src="../images/favicon.png" style="width: 70%  !important;" />
+    </div>
+    <div class="col-md-6">
+      <p style="font-weight: bold"><a ng-click="visualizarColaborador(colaborador)">{{colaborador.nome}}</a></p>
+      <p>{{colaborador.cargo.descricao}}</p>
+      <p>{{colaborador.departamento.descricao}}</p>
+    </div>
+  </div>
+</div>
 
+<div class="row" style="text-align: center;">
+  <input type="button" class="btn btn-primary" ng-click="botaoMais()" value="Mais" />
 </div>
