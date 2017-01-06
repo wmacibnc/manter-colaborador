@@ -7,6 +7,7 @@ import br.com.desafio.modelo.Cargo;
 import br.com.desafio.modelo.Colaborador;
 import br.com.desafio.modelo.Departamento;
 import br.com.desafio.modelo.TipoContato;
+import br.com.desafio.modelo.Usuario;
 
 public interface ColaboradorDAO{
 	
@@ -27,5 +28,7 @@ public interface ColaboradorDAO{
     Colaborador salvar (Colaborador colaborador);
     
     List<Colaborador> listarPaginado(PaginacaoDTO paginacaoDTO);
+    
+    Boolean validarUsuario(Usuario usuario);
 
 }

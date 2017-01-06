@@ -7,6 +7,7 @@ import br.com.desafio.modelo.Cargo;
 import br.com.desafio.modelo.Colaborador;
 import br.com.desafio.modelo.Departamento;
 import br.com.desafio.modelo.TipoContato;
+import br.com.desafio.modelo.Usuario;
 
 public interface ColaboradorService {
 
@@ -23,4 +24,6 @@ public interface ColaboradorService {
     List<Departamento> departamentos();
     
     List<TipoContato> tiposContato();
+    
+    Boolean validarUsuario(Usuario usuario);
 }

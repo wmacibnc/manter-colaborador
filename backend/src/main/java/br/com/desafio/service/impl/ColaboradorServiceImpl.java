@@ -11,6 +11,7 @@ import br.com.desafio.modelo.Cargo;
 import br.com.desafio.modelo.Colaborador;
 import br.com.desafio.modelo.Departamento;
 import br.com.desafio.modelo.TipoContato;
+import br.com.desafio.modelo.Usuario;
 import br.com.desafio.service.ColaboradorService;
 
 @Singleton
@@ -63,6 +64,11 @@ public class ColaboradorServiceImpl implements ColaboradorService {
 	@Override
 	public List<TipoContato> tiposContato() {
 		return colaboradorDAO.tiposContato();
+	}
+
+	@Override
+	public Boolean validarUsuario(Usuario usuario) {
+		return colaboradorDAO.validarUsuario(usuario);
 	}
 
 }

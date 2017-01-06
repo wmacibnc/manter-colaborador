@@ -14,34 +14,22 @@ app.run(function ($rootScope, $templateCache) {
 });
 
 
-app.controller('DummyCtrl', ['$scope', 'DummyFactory', function ($scope, DummyFactory) {
-  $scope.bla = 'bla from controller';
-  DummyFactory.query({}, function (data) {
-    $scope.foo = data.firstName;
-  })
+app.controller('LoginCtrl', ['$scope', 'UsuarioFactory','$location', function ($scope, UsuarioFactory, $location) {
+
+  $scope.efetuarLogin = function (){
+    UsuarioFactory.query($scope.usuario, function (data) {
+      if(data){
+        alert('sucesso');
+        $location.path('/colaboradores');
+      }else{
+        alert('erro');
+        $location.path('/login');
+      }
+
+    })
+  }
+
 }]);
-
-app.controller('UserListCtrl', ['$scope', 'UsersFactory', 'UserFactory', '$location',
-  function ($scope, UsersFactory, UserFactory, $location) {
-
-    /* callback for ng-click 'editUser': */
-    $scope.editUser = function (userId) {
-      $location.path('/user-detail/' + userId);
-    };
-
-    /* callback for ng-click 'deleteUser': */
-    $scope.deleteUser = function (userId) {
-      UserFactory.delete({ id: userId });
-      $scope.users = UsersFactory.query();
-    };
-
-    /* callback for ng-click 'createUser': */
-    $scope.createNewUser = function () {
-      $location.path('/user-creation');
-    };
-
-    $scope.users = UsersFactory.query();
-  }]);
 
 app.controller('ColaboradoresCtrl', ['$scope', 'ColaboradoresViewFactory','$location','$rootScope',
   function ($scope, ColaboradoresViewFactory, $location, $rootScope) {
@@ -76,11 +64,11 @@ app.controller('ColaboradoresCtrl', ['$scope', 'ColaboradoresViewFactory','$loca
       $location.path('/novo-colaborador');
     }
 
-}]);
+  }]);
 
 app.controller('CadastrarColaboradorCtrl', ['$scope', 'ColaboradorCadastroFactory', '$location', 'CargoFactory','DepartamentoFactory', 'TipoContatoFactory',
   function ($scope, ColaboradorCadastroFactory, $location, CargoFactory, DepartamentoFactory, TipoContatoFactory) {
-    
+
     $scope.colaboradorSelecionado = {};
     $scope.colaboradorSelecionado.cargo = {};
     $scope.colaboradorSelecionado.departamento = {};
@@ -93,7 +81,7 @@ app.controller('CadastrarColaboradorCtrl', ['$scope', 'ColaboradorCadastroFactor
     //   $scope.listaContato.push(1);
     // }
 
-     $scope.salvarDadosCadastro = function (){
+    $scope.salvarDadosCadastro = function (){
       $scope.colaboradorSelecionado.contatos = $scope.contatos;
       ColaboradorCadastroFactory.salvarColaborador($scope.colaboradorSelecionado);
       $location.path('/colaboradores');
@@ -137,40 +125,40 @@ app.controller('CadastrarColaboradorCtrl', ['$scope', 'ColaboradorCadastroFactor
     };
 
     var imagens = {
-       muitoBom: 'http://i.imgur.com/bFnWq8k.png', 
-       bom: 'http://i.imgur.com/VnlbIoL.png', 
-       medio: 'http://i.imgur.com/eNAvIvr.png', 
-       ruim: 'http://i.imgur.com/uCRXqdV.png', 
-       pessimo: 'http://i.imgur.com/biRJBNL.png'
-    }
+     muitoBom: 'http://i.imgur.com/bFnWq8k.png', 
+     bom: 'http://i.imgur.com/VnlbIoL.png', 
+     medio: 'http://i.imgur.com/eNAvIvr.png', 
+     ruim: 'http://i.imgur.com/uCRXqdV.png', 
+     pessimo: 'http://i.imgur.com/biRJBNL.png'
+   }
 
-    var marcadores = [];
+   var marcadores = [];
 
-    $scope.criaMarcador = function(marcador, mapa) {
+   $scope.criaMarcador = function(marcador, mapa) {
     var posicao = new google.maps.LatLng(marcador.latitude, marcador.longitude);
     var opcoes = {
       position: posicao
       , title: marcador.titulo
       , animation: google.maps.Animation.DROP
       , icon:{
-          url: marcador.imagem || 'http://i.imgur.com/bFnWq8k.png'
-          , scaledSize: new google.maps.Size(50, 50)
-        }
+        url: marcador.imagem || 'http://i.imgur.com/bFnWq8k.png'
+        , scaledSize: new google.maps.Size(50, 50)
+      }
       , map: mapa
     }
 
     var novoMarcador = new google.maps.Marker(opcoes);
     marcadores.push(novoMarcador);
     $scope.map.setCenter(novoMarcador.position);
-    }
+  }
 
-    $scope.adiciona = function(){
-      var marcador = {
-        latitude: -25.425777, 
-        longitude: -49.3335829, 
-        titulo: 'Novo marcador', 
-        imagem: imagens.muitoBom
-      }
+  $scope.adiciona = function(){
+    var marcador = {
+      latitude: -25.425777, 
+      longitude: -49.3335829, 
+      titulo: 'Novo marcador', 
+      imagem: imagens.muitoBom
+    }
     $scope.criaMarcador(marcador, $scope.map);
   }
 
@@ -186,27 +174,27 @@ app.controller('CadastrarColaboradorCtrl', ['$scope', 'ColaboradorCadastroFactor
   }
 
   $scope.converteEndereco = function (endereco, avaliacao) {
-  $scope.geocoder.geocode( { 'address': endereco}, function(resultado, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
+    $scope.geocoder.geocode( { 'address': endereco}, function(resultado, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
 
-      var latitude = resultado[0].geometry.location.lat();
-      var longitude = resultado[0].geometry.location.lng();
+        var latitude = resultado[0].geometry.location.lat();
+        var longitude = resultado[0].geometry.location.lng();
 
-      $scope.colaboradorSelecionado.latitude = latitude;
-      $scope.colaboradorSelecionado.longitude = longitude;
+        $scope.colaboradorSelecionado.latitude = latitude;
+        $scope.colaboradorSelecionado.longitude = longitude;
 
-      var marcador = {
-            latitude : latitude,
-            longitude : longitude,
-            titulo: 'Novo marcador',
-            imagem: avaliacao
+        var marcador = {
+          latitude : latitude,
+          longitude : longitude,
+          titulo: 'Novo marcador',
+          imagem: avaliacao
+        }
+        $scope.criaMarcador(marcador, $scope.map);
+      } else {
+        alert('Erro ao converter endereço: ' + status);
       }
-       $scope.criaMarcador(marcador, $scope.map);
-    } else {
-      alert('Erro ao converter endereço: ' + status);
-    }
-  });
-}
+    });
+  }
 
   $scope.inicializar();
 
@@ -215,7 +203,7 @@ app.controller('CadastrarColaboradorCtrl', ['$scope', 'ColaboradorCadastroFactor
 
 app.controller('VisualizarColaboradorCtrl', ['$scope', 'ColaboradorExcluirFactory', '$location', '$rootScope',
   function ($scope, ColaboradorExcluirFactory, $location, $rootScope) {
-    
+
     $scope.colaboradorSelecionado = $rootScope.colaboradorSelecionado;
 
     $scope.alterarColaborador = function (){
@@ -228,13 +216,13 @@ app.controller('VisualizarColaboradorCtrl', ['$scope', 'ColaboradorExcluirFactor
     }
 
 
-      var latitude = $scope.colaboradorSelecionado.latitude;
-      var longitude = $scope.colaboradorSelecionado.longitude;
+    var latitude = $scope.colaboradorSelecionado.latitude;
+    var longitude = $scope.colaboradorSelecionado.longitude;
 
-      var inicial = {
-        latitude: latitude,
-        longitude: longitude
-      };
+    var inicial = {
+      latitude: latitude,
+      longitude: longitude
+    };
 
     var divDoMapa = document.getElementById("map_canvas")
 
@@ -250,40 +238,40 @@ app.controller('VisualizarColaboradorCtrl', ['$scope', 'ColaboradorExcluirFactor
     }
 
     var imagens = {
-       muitoBom: 'http://i.imgur.com/bFnWq8k.png', 
-       bom: 'http://i.imgur.com/VnlbIoL.png', 
-       medio: 'http://i.imgur.com/eNAvIvr.png', 
-       ruim: 'http://i.imgur.com/uCRXqdV.png', 
-       pessimo: 'http://i.imgur.com/biRJBNL.png'
-    }
+     muitoBom: 'http://i.imgur.com/bFnWq8k.png', 
+     bom: 'http://i.imgur.com/VnlbIoL.png', 
+     medio: 'http://i.imgur.com/eNAvIvr.png', 
+     ruim: 'http://i.imgur.com/uCRXqdV.png', 
+     pessimo: 'http://i.imgur.com/biRJBNL.png'
+   }
 
-    var marcadores = [];
+   var marcadores = [];
 
-    $scope.criaMarcador = function(marcador, mapa) {
+   $scope.criaMarcador = function(marcador, mapa) {
     var posicao = new google.maps.LatLng(marcador.latitude, marcador.longitude);
     var opcoes = {
       position: posicao
       , title: marcador.titulo
       , animation: google.maps.Animation.DROP
       , icon:{
-          url: marcador.imagem || 'http://i.imgur.com/bFnWq8k.png'
-          , scaledSize: new google.maps.Size(50, 50)
-        }
+        url: marcador.imagem || 'http://i.imgur.com/bFnWq8k.png'
+        , scaledSize: new google.maps.Size(50, 50)
+      }
       , map: mapa
     }
 
     var novoMarcador = new google.maps.Marker(opcoes);
     marcadores.push(novoMarcador);
     $scope.map.setCenter(novoMarcador.position);
-    }
+  }
 
-    $scope.adiciona = function(){
-      var marcador = {
-        latitude: -25.425777, 
-        longitude: -49.3335829, 
-        titulo: 'Novo marcador', 
-        imagem: imagens.muitoBom
-      }
+  $scope.adiciona = function(){
+    var marcador = {
+      latitude: -25.425777, 
+      longitude: -49.3335829, 
+      titulo: 'Novo marcador', 
+      imagem: imagens.muitoBom
+    }
     $scope.criaMarcador(marcador, $scope.map);
   }
 
@@ -298,36 +286,13 @@ app.controller('VisualizarColaboradorCtrl', ['$scope', 'ColaboradorExcluirFactor
     $scope.map.setZoom(14);
   }
 
-//   $scope.converteEndereco = function (endereco, avaliacao) {
-//   $scope.geocoder.geocode( { 'address': endereco}, function(resultado, status) {
-//     if (status == google.maps.GeocoderStatus.OK) {
-
-//       var latitude = resultado[0].geometry.location.lat();
-//       var longitude = resultado[0].geometry.location.lng();
-
-//       $scope.colaboradorSelecionado.latitude = latitude;
-//       $scope.colaboradorSelecionado.longitude = longitude;
-
-//       var marcador = {
-//             latitude : latitude,
-//             longitude : longitude,
-//             titulo: 'Novo marcador',
-//             imagem: avaliacao
-//       }
-//        $scope.criaMarcador(marcador, $scope.map);
-//     } else {
-//       alert('Erro ao converter endereço: ' + status);
-//     }
-//   });
-// }
-
   $scope.inicializar();
 
 }]);
 
 app.controller('AlterarColaboradorCtrl', ['$scope', 'ColaboradorAtualizarFactory', '$location', '$rootScope', 'CargoFactory','DepartamentoFactory', 'TipoContatoFactory',
   function ($scope, ColaboradorAtualizarFactory, $location, $rootScope, CargoFactory,DepartamentoFactory, TipoContatoFactory) {
-    
+
     $scope.colaboradorSelecionado = $rootScope.colaboradorSelecionado;
 
     $scope.contatos = new Array();
@@ -343,7 +308,7 @@ app.controller('AlterarColaboradorCtrl', ['$scope', 'ColaboradorAtualizarFactory
     };
 
 
-     var inicial = {
+    var inicial = {
       latitude: -15.7942287,
       longitude: -47.882165799999996
     };
@@ -381,40 +346,40 @@ app.controller('AlterarColaboradorCtrl', ['$scope', 'ColaboradorAtualizarFactory
     };
 
     var imagens = {
-       muitoBom: 'http://i.imgur.com/bFnWq8k.png', 
-       bom: 'http://i.imgur.com/VnlbIoL.png', 
-       medio: 'http://i.imgur.com/eNAvIvr.png', 
-       ruim: 'http://i.imgur.com/uCRXqdV.png', 
-       pessimo: 'http://i.imgur.com/biRJBNL.png'
-    }
+     muitoBom: 'http://i.imgur.com/bFnWq8k.png', 
+     bom: 'http://i.imgur.com/VnlbIoL.png', 
+     medio: 'http://i.imgur.com/eNAvIvr.png', 
+     ruim: 'http://i.imgur.com/uCRXqdV.png', 
+     pessimo: 'http://i.imgur.com/biRJBNL.png'
+   }
 
-    var marcadores = [];
+   var marcadores = [];
 
-    $scope.criaMarcador = function(marcador, mapa) {
+   $scope.criaMarcador = function(marcador, mapa) {
     var posicao = new google.maps.LatLng(marcador.latitude, marcador.longitude);
     var opcoes = {
       position: posicao
       , title: marcador.titulo
       , animation: google.maps.Animation.DROP
       , icon:{
-          url: marcador.imagem || 'http://i.imgur.com/bFnWq8k.png'
-          , scaledSize: new google.maps.Size(50, 50)
-        }
+        url: marcador.imagem || 'http://i.imgur.com/bFnWq8k.png'
+        , scaledSize: new google.maps.Size(50, 50)
+      }
       , map: mapa
     }
 
     var novoMarcador = new google.maps.Marker(opcoes);
     marcadores.push(novoMarcador);
     $scope.map.setCenter(novoMarcador.position);
-    }
+  }
 
-    $scope.adiciona = function(){
-      var marcador = {
-        latitude: -25.425777, 
-        longitude: -49.3335829, 
-        titulo: 'Novo marcador', 
-        imagem: imagens.muitoBom
-      }
+  $scope.adiciona = function(){
+    var marcador = {
+      latitude: -25.425777, 
+      longitude: -49.3335829, 
+      titulo: 'Novo marcador', 
+      imagem: imagens.muitoBom
+    }
     $scope.criaMarcador(marcador, $scope.map);
   }
 
@@ -430,79 +395,53 @@ app.controller('AlterarColaboradorCtrl', ['$scope', 'ColaboradorAtualizarFactory
   }
 
   $scope.converteEndereco = function (endereco, avaliacao) {
-  $scope.geocoder.geocode( { 'address': endereco}, function(resultado, status) {
-    if (status == google.maps.GeocoderStatus.OK) {
+    $scope.geocoder.geocode( { 'address': endereco}, function(resultado, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
 
-      var latitude = resultado[0].geometry.location.lat();
-      var longitude = resultado[0].geometry.location.lng();
+        var latitude = resultado[0].geometry.location.lat();
+        var longitude = resultado[0].geometry.location.lng();
 
-      $scope.colaboradorSelecionado.latitude = latitude;
-      $scope.colaboradorSelecionado.longitude = longitude;
+        $scope.colaboradorSelecionado.latitude = latitude;
+        $scope.colaboradorSelecionado.longitude = longitude;
 
-      var marcador = {
-            latitude : latitude,
-            longitude : longitude,
-            titulo: 'Novo marcador',
-            imagem: avaliacao
+        var marcador = {
+          latitude : latitude,
+          longitude : longitude,
+          titulo: 'Novo marcador',
+          imagem: avaliacao
+        }
+        $scope.criaMarcador(marcador, $scope.map);
+      } else {
+        alert('Erro ao converter endereço: ' + status);
       }
-       $scope.criaMarcador(marcador, $scope.map);
-    } else {
-      alert('Erro ao converter endereço: ' + status);
-    }
-  });
-}
+    });
+  }
 
   $scope.inicializar();
 
 }]);
 
-app.controller('UserDetailCtrl', ['$scope', '$routeParams', 'UserFactory', '$location',
-  function ($scope, $routeParams, UserFactory, $location) {
-
-    /* callback for ng-click 'updateUser': */
-    $scope.updateUser = function () {
-      UserFactory.update($scope.user);
-      $location.path('/user-list');
-    };
-
-    /* callback for ng-click 'cancel': */
-    $scope.cancel = function () {
-      $location.path('/user-list');
-    };
-
-    $scope.user = UserFactory.show({id: $routeParams.id});
-  }]);
-
-app.controller('UserCreationCtrl', ['$scope', 'UsersFactory', '$location',
-  function ($scope, UsersFactory, $location) {
-
-    /* callback for ng-click 'createNewUser': */
-    $scope.createNewUser = function () {
-      UsersFactory.create($scope.user);
-      $location.path('/user-list');
-    }
-  }]);
 
 angular.module('ng').filter('cut', function () {
-        return function (value, wordwise, max, tail) {
-            if (!value) return '';
+  return function (value, wordwise, max, tail) {
+    if (!value) return '';
 
-            max = parseInt(max, 10);
-            if (!max) return value;
-            if (value.length <= max) return value;
+    max = parseInt(max, 10);
+    if (!max) return value;
+    if (value.length <= max) return value;
 
-            value = value.substr(0, max);
-            if (wordwise) {
-                var lastspace = value.lastIndexOf(' ');
-                if (lastspace != -1) {
+    value = value.substr(0, max);
+    if (wordwise) {
+      var lastspace = value.lastIndexOf(' ');
+      if (lastspace != -1) {
                   //Also remove . and , so its gives a cleaner result.
                   if (value.charAt(lastspace-1) == '.' || value.charAt(lastspace-1) == ',') {
                     lastspace = lastspace - 1;
                   }
                   value = value.substr(0, lastspace);
                 }
-            }
+              }
 
-            return value + (tail || ' …');
-        };
-    });
+              return value + (tail || ' …');
+            };
+          });

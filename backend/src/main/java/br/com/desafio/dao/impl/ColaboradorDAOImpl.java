@@ -12,6 +12,7 @@ import br.com.desafio.modelo.Cargo;
 import br.com.desafio.modelo.Colaborador;
 import br.com.desafio.modelo.Departamento;
 import br.com.desafio.modelo.TipoContato;
+import br.com.desafio.modelo.Usuario;
 
 
 @Singleton
@@ -97,6 +98,17 @@ public class ColaboradorDAOImpl extends GenericDAORepository<Colaborador> implem
 	@Override
 	public List<TipoContato> tiposContato() {
 		return getEntityManager().createQuery("FROM TipoContato").getResultList();
+	}
+
+	@Override
+	public Boolean validarUsuario(Usuario usuario) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("select count(u) from Usuario u ");
+		sb.append(" where u.login = :login ");
+		sb.append(" and u.senha = :senha ");
+		return (Long)getEntityManager().createQuery(sb.toString())
+		.setParameter("login", usuario.getLogin())
+		.setParameter("senha", usuario.getSenha()).getSingleResult() > 0L;
 	}
 
 }
