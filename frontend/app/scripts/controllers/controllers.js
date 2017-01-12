@@ -40,11 +40,18 @@ app.controller('ColaboradoresCtrl', ['$scope', 'ColaboradoresViewFactory','$loca
 
     $scope.colaboradores = ColaboradoresViewFactory.query(paginacaoDTO);
 
+    var resultado = null;
+
     $scope.botaoMais = function (){
       paginacaoDTO = {};
       paginacaoDTO.page = $scope.page++;
       paginacaoDTO.filtro = $scope.filtro;
-      var resultado = ColaboradoresViewFactory.query(paginacaoDTO);
+      resultado = ColaboradoresViewFactory.query(paginacaoDTO);
+
+      setTimeout(function(){ $scope.dadosBotao(); }, 6000);
+    }
+
+    $scope.dadosBotao = function (){
       $scope.colaboradores = $scope.colaboradores.concat(resultado);
     }
 

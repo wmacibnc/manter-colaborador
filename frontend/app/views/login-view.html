@@ -15,14 +15,13 @@
       location.href="#/colaboradores";
       // testAPI();
   } else if (response.status === 'not_authorized') {
-  	location.href="#/login";
+   location.href="#/colaboradores";
 
       // The person is logged into Facebook, but not your app.
       document.getElementById('status').innerHTML = 'Please log ' +
       'into this app.';
   } else {
-location.href="#/login";
-      // The person is not logged into Facebook, so we're not sure if
+ location.href="#/colaboradores";      // The person is not logged into Facebook, so we're not sure if
       // they are logged into this app or not.
       document.getElementById('status').innerHTML = 'Please log ' +
       'into Facebook.';
